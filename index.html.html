@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rede RAPS Pernambuco - CAPS e CAPS AD | Terapia Ocupacional UNINASSAU</title>
+    <style>
+        :root {
+            --primary-color: #1a5c48;
+            --secondary-color: #2e7d63;
+            --accent-color: #e8f5e9;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --bg-color: #f7f9fa;
+            --card-bg: #ffffff;
+            --danger-badge: #d32f2f;
+            --info-badge: #0288d1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Banner de Extensão Acadêmica */
+        .academic-banner {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #1b5e20;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .academic-banner h4 {
+            margin: 0 0 8px 0;
+            color: #1b5e20;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .academic-banner p {
+            margin: 4px 0;
+            line-height: 1.4;
+        }
+
+        .students-list {
+            margin-top: 8px;
+            padding-left: 15px;
+        }
+
+        .students-list li {
+            margin-bottom: 3px;
+        }
+
+        /* Aviso de Portas Abertas */
+        .open-door-banner {
+            background-color: #fff9c4;
+            border-left: 6px solid #fbc02d;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .open-door-banner h3 {
+            margin: 0 0 8px 0;
+            color: #f57f17;
+            font-size: 1.1rem;
+        }
+
+        .open-door-banner p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        /* Área de Filtros e Pesquisa */
+        .search-filter-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"], select {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Grid e Cards das Unidades */
+        .unit-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .unit-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.2s;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .unit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .unit-name {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .badge-ad {
+            background-color: var(--danger-badge);
+        }
+
+        .badge-geral {
+            background-color: var(--info-badge);
+        }
+
+        .unit-info {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .unit-info strong {
+            color: #555;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .city-tag {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .map-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+
+        .map-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 40px;
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Rede de Atenção Psicossocial - PE</h1>
+            <p>Guia de Consulta Rápida: CAPS e CAPS AD em Pernambuco</p>
+        </header>
+
+        <!-- Informações de Extensão Acadêmica -->
+        <div class="academic-banner">
+            <h4>Projeto de Extensão Acadêmica</h4>
+            <p><strong>Curso:</strong> Terapia Ocupacional (6º Período) — Centro Universitário UNINASSAU (Graças, Recife - PE)</p>
+            <p><strong>Disciplina:</strong> Terapia Ocupacional em Saúde Mental</p>
+            <p><strong>Professora Orientadora:</strong> Suelen D Andrada Cruz (Terapeuta Ocupacional)</p>
+            <p style="margin-top: 8px;"><strong>Estudantes Autores:</strong></p>
+            <ul class="students-list">
+                <li>Ana Carla de Castro Mathias — Matrícula: 01750501</li>
+                <li>Marina Victalino Reinaux Vidal — Matrícula: 01203190</li>
+                <li>Michele Loiola de Moura — Matrícula: 01737594</li>
+                <li>Otávio Augusto Aragão Gomes Júnior — Matrícula: 24004666</li>
+                <li>Roberta Suellen da Silva Lima — Matrícula: 01729074</li>
+            </ul>
+        </div>
+
+        <!-- Banner Institucional de Portas Abertas -->
+        <div class="open-door-banner">
+            <h3>Atendimento de Portas Abertas</h3>
+            <p>Os Centros de Atenção Psicossocial (CAPS e CAPS AD) funcionam em regime de <strong>portas abertas</strong>. O usuário ou familiar pode procurar diretamente qualquer unidade da rede para o primeiro acolhimento e orientação, <strong>sem necessidade de encaminhamento prévio ou marcação de consulta</strong>.</p>
+        </div>
+
+        <!-- Filtros -->
+        <div class="search-filter-box">
+            <input type="text" id="searchInput" placeholder="Pesquisar por município, nome da unidade ou endereço..." onkeyup="filterUnits()">
+            <select id="typeFilter" onchange="filterUnits()">
+                <option value="ALL">Todas as Modalidades (CAPS & CAPS AD)</option>
+                <option value="AD">Apenas CAPS AD (Álcool e Drogas)</option>
+                <option value="GERAL">Apenas CAPS Gerais / Infantis</option>
+            </select>
+        </div>
+
+        <!-- Resultados -->
+        <div id="unitGrid" class="unit-grid">
+            <!-- Os cards serão carregados dinamicamente via JavaScript -->
+        </div>
+
+        <footer>
+            <p>Desenvolvido como atividade extensionista acadêmica — UNINASSAU Graças, Recife - PE (2026)</p>
+        </footer>
+    </div>
+
+    <script>
+        const unitsData = [
+            {
+                municipio: "Abreu e Lima",
+                nome: "CAPS II de Abreu e Lima",
+                tipo: "GERAL",
+                endereco: "Rua Primeira Travessa Cavalheiro, 01 - Centro, Abreu e Lima - PE",
+                telefone: "(81) 3541-1370",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Abreu e Lima",
+                nome: "CAPS AD Abreu e Lima",
+                tipo: "AD",
+                endereco: "Centro, Abreu e Lima - PE",
+                telefone: "Disponível via Secretaria Municipal de Saúde",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Buíque",
+                nome: "CAPS Odená Tenório de Almeida",
+                tipo: "GERAL",
+                endereco: "Rua São João, 194 - Centro C. Mucambo, Buíque - PE",
+                telefone: "(87) 3855-2914",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Cabo de Santo Agostinho",
+                nome: "CAPS Estação Cidadania",
+                tipo: "GERAL",
+                endereco: "Rua José Lins Teles, 99 - Vila Social, Cabo de Santo Agostinho - PE",
+                telefone: "(81) 3521-6672",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Cabo de Santo Agostinho",
+                nome: "CAPSI - Ciranda da Vida (Infantil)",
+                tipo: "GERAL",
+                endereco: "Rua Quatro, 54 - Loteamento Ilha - Ponte dos Carvalhos, Cabo de Santo Agostinho - PE",
+                telefone: "(81) 3522-2718",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Cabo de Santo Agostinho",
+                nome: "CAPSad Pastor Armando José da Silva",
+                tipo: "AD",
+                endereco: "Av. Historiador Pereira da Costa, 736 - Centro, Cabo de Santo Agostinho - PE",
+                telefone: "(81) 3521-6628",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Camaragibe",
+                nome: "CAPS Casa da Primavera",
+                tipo: "GERAL",
+                endereco: "Av. Ercina Lapenda, nº 249 - Timbi, Camaragibe - PE",
+                telefone: "(81) 3484-2149",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Caruaru",
+                nome: "CAPS Crescendo com Dignidade",
+                tipo: "GERAL",
+                endereco: "Rua Rio Formoso, s/nº - Boa Vista II, Caruaru - PE",
+                telefone: "(81) 3701-1387",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Caruaru",
+                nome: "CAPS AD III Caruaru",
+                tipo: "AD",
+                endereco: "Caruaru - PE",
+                telefone: "Disponível via Secretaria Municipal de Saúde",
+                horario: "Atendimento contínuo (24 horas)"
+            },
+            {
+                municipio: "Garanhuns",
+                nome: "CAPS AD Geovane Belardino de Moura",
+                tipo: "AD",
+                endereco: "Garanhuns - PE",
+                telefone: "Disponível via Secretaria Municipal de Saúde",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Garanhuns",
+                nome: "CAPS Alzira Maria Veloso (CAPS 24h)",
+                tipo: "GERAL",
+                endereco: "Garanhuns - PE",
+                telefone: "Disponível via Secretaria Municipal de Saúde",
+                horario: "Atendimento contínuo (24 horas)"
+            },
+            {
+                municipio: "Jaboatão dos Guararapes",
+                nome: "CAPS Solar dos Guararapes",
+                tipo: "GERAL",
+                endereco: "Rua Emiliano Ribeiro, 280 - Prazeres, Jaboatão dos Guararapes - PE",
+                telefone: "(81) 3461-9952",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Jaboatão dos Guararapes",
+                nome: "CAPS AD Recanto dos Guararapes",
+                tipo: "AD",
+                endereco: "Jaboatão dos Guararapes - PE",
+                telefone: "Disponível via Secretaria Municipal de Saúde",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Olinda",
+                nome: "CAPS Nise da Silveira",
+                tipo: "GERAL",
+                endereco: "Rua Trinta e Oito, s/n - IV Etapa - Rio Doce, Olinda - PE",
+                telefone: "(81) 3492-4566",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Olinda",
+                nome: "CAPSad Dr. Antonio Carlos Escobar",
+                tipo: "AD",
+                endereco: "Rua Jardim Fragoso, s/nº, Campos da Funeso - Jardim Fragoso, Olinda - PE",
+                telefone: "(81) 3429-9719",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Paulista",
+                nome: "CAPSad Maria Eliane Aguiar",
+                tipo: "AD",
+                endereco: "Av. Dr. Rodolfo Aureliano, 798 - Vila Torres Galvão, Paulista - PE",
+                telefone: "(81) 3433-0495",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Petrolina",
+                nome: "CAPS André do Cavaquinho",
+                tipo: "GERAL",
+                endereco: "Rua do Amarelo, 80 - Caminho do Sol, Petrolina - PE",
+                telefone: "(87) 3861-7922",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Petrolina",
+                nome: "CAPSad III Célia Maria de Oliveira Alencar",
+                tipo: "AD",
+                endereco: "Rua da Simpatia, 229 - Centro, Petrolina - PE",
+                telefone: "(87) 3862-9296",
+                horario: "Atendimento contínuo 24 horas"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPSad-CECRH (Centro Eulâmpio Cordeiro de Recuperação Humana)",
+                tipo: "AD",
+                endereco: "Rua Rondônia, 100 - Zumbi, Recife - PE",
+                telefone: "(81) 3232-7630",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPSad Prof. Luiz Cerqueira",
+                tipo: "AD",
+                endereco: "Rua Álvares de Azevedo, 80 - Santo Amaro, Recife - PE",
+                telefone: "(81) 3232-1516",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPS AD Prof. José Lucena",
+                tipo: "AD",
+                endereco: "Rua Itajaí, 418 - Imbiribeira, Recife - PE",
+                telefone: "(81) 3232-3388",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPSad Professor René Ribeiro",
+                tipo: "AD",
+                endereco: "Rua Jacira, 210 - Afogados, Recife - PE",
+                telefone: "(81) 3232-2255",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPSad CPTRA (Centro de Prevenção, Tratamento e Reabilitação do Alcoolismo)",
+                tipo: "AD",
+                endereco: "Av. Cons. Rosa e Silva, 2130 - Jaqueiras, Recife - PE",
+                telefone: "(81) 3441-9244",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPSad Estação Vicente Araújo",
+                tipo: "AD",
+                endereco: "Rua Carlos Fernandes, 220 - Hipódromo, Recife - PE",
+                telefone: "(81) 3232-7794",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPS Espaço Vida",
+                tipo: "GERAL",
+                endereco: "Rua Ambrósio Machado, 280 - Iputinga, Recife - PE",
+                telefone: "(81) 3232-4745",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Recife",
+                nome: "CAPS Professor Galdino Loreto",
+                tipo: "GERAL",
+                endereco: "Rua Emília Torreão, 135 - Afogados, Recife - PE",
+                telefone: "(81) 3232-2281",
+                horario: "Segunda a sexta-feira, das 07:00 às 17:00"
+            },
+            {
+                municipio: "Santa Cruz do Capibaribe",
+                nome: "CAPS AD III Santa Cruz do Capibaribe",
+                tipo: "AD",
+                endereco: "Santa Cruz do Capibaribe - PE",
+                telefone: "Disponível via Secretaria Municipal de Saúde",
+                horario: "Atendimento contínuo (24 horas)"
+            }
+        ];
+
+        function renderUnits(data) {
+            const grid = document.getElementById('unitGrid');
+            
+            if (data.length === 0) {
+                grid.innerHTML = '<div class="no-results">Nenhuma unidade encontrada com os critérios informados.</div>';
+                return;
+            }
+
+            grid.innerHTML = data.map(unit => {
+                const badgeClass = unit.tipo === 'AD' ? 'badge-ad' : 'badge-geral';
+                const badgeText = unit.tipo === 'AD' ? 'CAPS AD (Álcool e Drogas)' : 'CAPS (Geral / Infantil)';
+                const mapsQuery = encodeURIComponent(`${unit.nome}, ${unit.endereco}, Pernambuco`);
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+                return `
+                    <div class="unit-card">
+                        <div class="unit-header">
+                            <h3 class="unit-name">${unit.nome}</h3>
+                            <span class="badge ${badgeClass}">${badgeText}</span>
+                        </div>
+                        <div class="unit-info"><strong>Endereço:</strong> ${unit.endereco}</div>
+                        <div class="unit-info"><strong>Telefone:</strong> ${unit.telefone}</div>
+                        <div class="unit-info"><strong>Horário:</strong> ${unit.horario}</div>
+                        <div class="card-footer">
+                            <span class="city-tag">📍 ${unit.municipio} - PE</span>
+                            <a href="${mapsUrl}" target="_blank" class="map-btn">Ver no Google Maps</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterUnits() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const typeValue = document.getElementById('typeFilter').value;
+
+            const filtered = unitsData.filter(unit => {
+                const matchesSearch = unit.municipio.toLowerCase().includes(searchQuery) ||
+                                      unit.nome.toLowerCase().includes(searchQuery) ||
+                                      unit.endereco.toLowerCase().includes(searchQuery);
+                
+                const matchesType = typeValue === 'ALL' || unit.tipo === typeValue;
+
+                return matchesSearch && matchesType;
+            });
+
+            renderUnits(filtered);
+        }
+
+        // Renderização inicial ao carregar a página
+        renderUnits(unitsData);
+    </script>
+</body>
+</html>
